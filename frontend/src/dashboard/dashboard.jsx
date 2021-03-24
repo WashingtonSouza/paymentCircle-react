@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import ContentHeader from '../common/template/contentHeader'
 import Content from '../common/template/content'
@@ -8,14 +9,15 @@ import Row from '../common/layout/row'
 
 class Dashboard extends Component {
   render() {
+    const { credit, debt } = this.props.summary
     return (
       <div>
         <ContentHeader title='Dashboard' small='Version 1.0' />
         <Content>
           <Row>
-            <ValueBox cols='12 4' color='green' icon='bank' value='10' text='Credits amount' />
-            <ValueBox cols='12 4' color='red' icon='credit-card' value='10' text='Debt amount' />
-            <ValueBox cols='12 4' color='blue' icon='money' value='R$ 0' text='Consolited amount' />
+            <ValueBox cols='12 4' color='green' icon='bank' value={`$ ${credit}`} text='Credits amount' />
+            <ValueBox cols='12 4' color='red' icon='credit-card' value={`$ ${debt}`} text='Debt amount' />
+            <ValueBox cols='12 4' color='blue' icon='money' value={`$ ${credit - debt}`} text='Consolited amount' />
           </Row>
         </Content>
       </div>
@@ -23,4 +25,5 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard
+const mapStateToProps = state => ({ summary: state.dashboard.summary })
+export default connect(mapStateToProps)(Dashboard)
