@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import getList from './billingCycleActions'
+import { getList } from './billingCycleActions'
 
 class BillingCycleList extends Component {
-
   componentWillMount() {
     this.props.getList()
   }
