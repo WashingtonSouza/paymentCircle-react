@@ -16,10 +16,23 @@ export function getList() {
 }
 
 export function create(values) {
+  return submit(values, 'post')
+}
+
+export function update(values) {
+  return submit(values, 'put')
+}
+
+export function remove(values) {
+  return submit(values, 'delete')
+}
+
+function submit(values, method) {
   return dispatch => {
-    axios.post(`${BASE_URL}/billingCycles`, values)
+    const id = values._id ? values._id : ''
+    axios[method](`${BASE_URL}/billingCycles/${id}`, values)
       .then(resp => {
-        toastr.success('Sucess', 'Operation saved successfully')
+        toastr.success('Sucess', 'Operation performed successfully')
         dispatch(init())
       })
       .catch(e => {
@@ -32,6 +45,14 @@ export function showUpdate(billingCycle) {
   return [
     showTabs('tabEdit'),
     selectTab('tabEdit'),
+    initialize('billingCycleForm', billingCycle)
+  ]
+}
+
+export function showDelete(billingCycle) {
+  return [
+    showTabs('tabDelete'),
+    selectTab('tabDelete'),
     initialize('billingCycleForm', billingCycle)
   ]
 }
